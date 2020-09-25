@@ -22,6 +22,7 @@ Route::group(
     ['namespace' => 'Admin',  'prefix' => 'admin', 'middleware' => 'auth'],
     function () {
         Route::group(['middleware' => ['role:administrator']], function () {
+            // Route::
             Route::get('dashboard', 'DashboardController@index')->name('dashboard');
 
             Route::get('categoryAjax', 'CategoryController@data_ajax')->name('category.ajax');
@@ -54,6 +55,12 @@ Route::group(
 
     }
 );
+
+Route::group(['prefix' => 'laravel-filemanager', 'middleware' => 'auth'], function() {
+    \UniSharp\LaravelFilemanager\Lfm::routes();
+    Route::view('/image', 'pages.admin.post.image');
+    Route::view('/file', 'pages.admin.post.file');
+});
 
 
 Auth::routes(['register' => false, 'password/reset' => false]);
